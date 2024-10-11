@@ -163,4 +163,17 @@ public class PingPingController : ControllerBase
 
         return Ok(result);
     }
+
+    [HttpPost("/reset-password")]
+    public async Task<IActionResult> ResetPassword([FromBody] ResetPasswordModel resetPassword)
+    {
+        ArgumentNullException.ThrowIfNull(resetPassword, nameof(resetPassword));
+
+        if (string.IsNullOrWhiteSpace(resetPassword.Username))
+            return BadRequest(new ErrorModel { Message = "Username is empty." });
+
+        var result = await _service.ResetPassword(resetPassword.Username);
+
+        return Ok(result);
+    }
 }

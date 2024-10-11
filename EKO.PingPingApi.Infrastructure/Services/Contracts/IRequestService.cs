@@ -51,4 +51,11 @@ public interface IRequestService
     /// <param name="sessionId"></param>
     /// <returns>true if the session was logged out, otherwise false.</returns>
     public Task<bool> LogoutSession(string cookie, string sessionId);
+
+    /// <summary>
+    /// Reset the password of the user.
+    /// </summary>
+    /// <param name="username">Username to reset the password for</param>
+    /// <returns>true if a mail was sent</returns>
+    public Task<bool> ResetPassword(string username);
 }

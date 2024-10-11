@@ -70,4 +70,9 @@ public sealed class PingPingService : IPingPingService
     {
         return await _request.LogoutSession(cookie, sessionId);
     }
+
+    public async Task<bool> ResetPassword(string username)
+    {
+        return await _request.ResetPassword(username);
+    }
 }

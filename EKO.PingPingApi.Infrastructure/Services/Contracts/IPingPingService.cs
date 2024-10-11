@@ -50,4 +50,11 @@ public interface IPingPingService
     /// <param name="sessionId">Session ID to log out.</param>
     /// <returns>true if the logout was successful, otherwise false.</returns>
     public Task<bool> LogoutSession(string cookie, string sessionId);
+
+    /// <summary>
+    /// Reset the password of the user.
+    /// </summary>
+    /// <param name="username">Username to reset the password for</param>
+    /// <returns>true if the reset was successful</returns>
+    public Task<bool> ResetPassword(string username);
 }

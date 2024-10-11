@@ -190,4 +190,28 @@ public sealed class PingPingRequestService : IRequestService
 
         return true;
     }
+
+    public async Task<bool> ResetPassword(string username)
+    {
+        var request = new HttpRequestMessage
+        {
+            Method = HttpMethod.Post,
+            RequestUri = new Uri(BASE_URL + "?view=resetpassword"),
+            Headers =
+            {
+                { "user-agent", USER_AGENT },
+                { "Accept", "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7" },
+            },
+            Content = new FormUrlEncodedContent(new Dictionary<string, string>
+            {
+                { "type", "user" },
+                { "Username", username },
+                { "reset", "Wachtwoord opnieuw instellen" },
+            }),
+        };
+
+        using var response = await _httpClient.SendAsync(request);
+
+        return response.IsSuccessStatusCode;
+    }
 }
