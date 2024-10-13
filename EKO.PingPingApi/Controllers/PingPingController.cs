@@ -164,6 +164,11 @@ public class PingPingController : ControllerBase
         return Ok(result);
     }
 
+    /// <summary>
+    /// Resets the password for the given username.
+    /// </summary>
+    /// <param name="resetPassword">Username to reset the password for</param>
+    /// <returns>True if it succeeds else false</returns>
     [HttpPost("/reset-password")]
     public async Task<IActionResult> ResetPassword([FromBody] ResetPasswordModel resetPassword)
     {
@@ -172,8 +177,25 @@ public class PingPingController : ControllerBase
         if (string.IsNullOrWhiteSpace(resetPassword.Username))
             return BadRequest(new ErrorModel { Message = "Username is empty." });
 
+        if (!resetPassword.Username.Contains('@') || !resetPassword.Username.Contains('.'))
+            return BadRequest(new ErrorModel { Message = "Username is not an email." });
+
         var result = await _service.ResetPassword(resetPassword.Username);
 
         return Ok(result);
+    }
+
+    /// <summary>
+    /// Returns the status of the API.
+    /// </summary>
+    /// <returns>Status of API</returns>
+    [HttpGet("/status")]
+    public IActionResult Status()
+    {
+        return Ok(new
+        {
+            Status = "OK",
+            Message = $"Hello from EKO.PingPingApi! Current Server DateTime: {DateTime.Now:yyyy-MM-dd HH:mm:ss}",
+        });
     }
 }
